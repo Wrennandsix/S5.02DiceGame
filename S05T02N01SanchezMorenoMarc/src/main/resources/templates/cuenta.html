@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="https://www.thymeLeaf.org">
+<head>
+<meta charset="utf-8">
+<title>Cuenta</title>
+<link href="/css/main.css" rel="stylesheet" type="text/css">
+
+
+</head>
+<body>
+	<nav class="nav">
+		<div>
+			<a sec:authorize="isAuthenticated()" class="log"
+				href="/ranquings">Ranquings</a> <a
+				sec:authorize="isAuthenticated()" href="/juego"class="log"> Jugar </a> <a
+				sec:authorize="isAuthenticated()" class="log" th:href="@{/logout}">Logout</a>
+		</div>
+	</nav>
+	<br>
+	<h1>Hola!</h1>
+	<br>
+	<!-- On tables -->
+	<div class="contenido">
+		<!--	<span sec:authentication="principal.username" th:object="${nombre}" ></span>-->
+		
+		<table class="tabla">
+
+			<thead>
+				<tr>
+
+					<th class="text">Nombre</th>
+					<th class="text">Fecha de alta</th>
+					<th class="text">Ranquing Personal</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="text" th:each="jugador:${jugador}">
+					<td class="text" th:text="${jugador.nombre}">1</td>
+					<td class="text" th:text="${jugador.date}">2</td>
+					<td class="text" th:text="${jugador.ranquing}">2</td>
+
+
+				</tr>
+			</tbody>
+		</table>
+		<div>
+			<br> <a class="log"
+				href=" http://localhost:9001/update"
+				>Cambiar
+				nombre</a>
+		</div>
+		<br>
+		<h2>Partidas:</h2>
+		<table class="tabla">
+
+			<thead>
+				<tr>
+					<th class="text" scope="col">Dado1</th>
+					<th class="text" scope="col">Dado2</th>
+					<th class="text" scope="col">Resultado</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="text" th:each="jugadas:${jugadas}">
+					<td class="text" th:text="${jugadas.dado1}">1</td>
+					<td class="text" th:text="${jugadas.dado2}">2</td>
+					<td class="text" th:text="${jugadas.resultado}">resultado</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

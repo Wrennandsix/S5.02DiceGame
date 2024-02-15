@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html lang="es" xmlns:th="https://www.thymeLeaf.org">
+<head>
+<meta charset="utf-8">
+<title>Login</title>
+<link href="/css/main.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+	<nav class="nav">
+		<div>
+			<h1>
+				<a>Darse de alta:</a>
+			</h1>
+		</div>
+
+	</nav>
+	<div class="contenido">
+		<br>
+		<div th:if=${param.exito}>
+			<div class="exito">Se ha registrado exitosamente</div>
+		</div>
+		<div th:if=${param.error}>
+			<div class="error">El nombre ya existe</div>
+		</div>
+		<br>
+		<div class="contenido">
+			<form th:action="@{/players}" th:object="${usuario}" method="POST">
+				<div class="mb-3">
+					<label>Nombre:</label> <input id="nombre" type="text" name="nombre"
+						th:field="*{nombre}" class="form-control"
+						placeholder="Escribe el nombre... ">
+					
+				</div>
+				<div class="mb-3">
+					<label>Contraseña:</label> <input id="password" type="password" name="nombre"
+						th:field="*{password}" class="form-control"
+						placeholder="Escribe la contraseña... ">
+				</div>
+				<br> <a class="log"
+					href="http://localhost:9001/players/cuenta/1"> Jugar como
+					anónimo</a>
+				<button type="submit" class="log">Registrarse</button>
+				<br> <span>Si ya estás registrado <a class="ini" th:href=@{/login}>inicia
+						sesión aquí.</a></span>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

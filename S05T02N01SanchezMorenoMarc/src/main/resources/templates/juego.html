@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeLeaf.org">
+<head>
+<meta charset="utf-8">
+<title>Resultado></title>
+<link href="/css/main.css" rel="stylesheet" type="text/css">
+
+
+</head>
+<body>
+	<nav class="nav">
+		<div class="container-fluid">
+			<a class="log" href="/">Cuenta</a> <a class="log"
+				 href="/juego"> Jugar </a> 
+		</div>
+	</nav>
+	<br>
+	<h1 class="mx-auto" style="width: 600px;">Juego:</h1>
+	<br>
+
+	<table th:object="${partida}" class="tabla">
+
+		<thead>
+			<tr>
+				<th class="text">Dado1</th>
+				<th class="text">Dado2</th>
+				<th class="text">Resultado</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="partida:${partida}">
+				<td class="text" th:text="${partida.dado1}">1</td>
+				<td class="text" th:text="${partida.dado2}">2</td>
+				<td class="text" th:text="${partida.resultado}">resultado</td>
+			</tr>
+		</tbody>
+	</table>
+
+</body>
+</html>

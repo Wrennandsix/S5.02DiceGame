@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeLeaf.org">
+<head>
+<meta charset="utf-8">
+<title>Stats</title>
+<link href="/css/main.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+	<nav class="nav">
+		<div class="container-fluid">
+			<a class="log" href="/">Cuenta</a> 
+			 <a class="log"
+				href="/getAll">Ver Jugadores</a>
+		</div>
+	</nav>
+	<br>
+	<div class="contenido">
+		<h1>Ranquing total:</h1>
+		<h2 th:text="${ranquingAbsoluto}">ranquingAbsoluto</h2>
+	</div>
+	<br>
+			<h1>Últimas partidas:</h1>
+
+	<div class="contenido">
+		<table class="tabla">
+			<thead>
+				<tr>
+					<th class="text">Dado 1</th>
+					<th class="text">Dado 2</th>
+					<th class="text">Resultado</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="partidas:${partidas}">
+					<td class="text" th:text="${partidas.dado1}">ranquing</td>
+					<td class="text" th:text="${partidas.dado2}">ranquing</td>
+					<td class="text" th:text="${partidas.resultado}">ranquing</td>
+
+				</tr>
+			</tbody>
+			</tbody>
+		</table>
+	</div>
+	<br>
+
+</body>
+</html>

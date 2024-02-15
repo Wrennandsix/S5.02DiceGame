@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeLeaf.org">
+<head>
+<meta charset="utf-8">
+<title>Login</title>
+<link href="/css/main.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+
+	<nav class="nav">
+		<div>
+			<a class="log" href="/ranquings">Ranquings</a> <a class="log"
+				href="/">Mi cuenta</a>
+		</div>
+	</nav>
+	<br>
+	<h1>Cambiar nombre:</h1>
+	<br>
+	<div th:if=${param.error}>
+			<div class="error">El nombre ya existe</div>
+		</div>
+	<div class="contenido">
+		<div class="form" style="width: 400px;">
+			<form th:action="@{/updating}" th:object="${usuario}" method="POST">			
+				<br>
+				<div class="form-group">
+					<label class="form-label">Nombre:</label>
+					<input type="text" name="nombre" th:field="*{nombre}"
+						class="form-control" placeholder="Escribe el nombre... ">
+					<div class="info">Debes usar un nombre que no este en uso.</div>
+				</div>
+
+
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
