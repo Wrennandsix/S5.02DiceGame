@@ -29,15 +29,15 @@ public class GameController {
     }
 
     @PostMapping("")
-    public ResponseEntity<String> newPlayer(@RequestBody UsuarioDTO userRegister){
+    public ResponseEntity<String> newUser(@RequestBody UsuarioDTO userRegister){
         userService.saveUser(userRegister);
-        return new ResponseEntity<>("Player added successfully", HttpStatus.CREATED);
+        return new ResponseEntity<>("user added successfully", HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updateUser(@PathVariable("id") Integer id, @RequestBody UsuarioDTO userDTORequest){
         userService.updateUser(id, userDTORequest);
-        return new ResponseEntity<>("Player updated successfully", HttpStatus.OK);
+        return new ResponseEntity<>("user updated successfully", HttpStatus.OK);
     }
     
 	@PostMapping("/{id}/game")
@@ -88,7 +88,7 @@ public class GameController {
 
     @GetMapping("/ranking/winner")
     public ResponseEntity<UsuarioDTO> getWinner(){
-    	UsuarioDTO winnerUser = userService.getWiner();
+    	UsuarioDTO winnerUser = userService.getWinner();
         return new ResponseEntity<>(winnerUser, HttpStatus.OK);
     }
 }

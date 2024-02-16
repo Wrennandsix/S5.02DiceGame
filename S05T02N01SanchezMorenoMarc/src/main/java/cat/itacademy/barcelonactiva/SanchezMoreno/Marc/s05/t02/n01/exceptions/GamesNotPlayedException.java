@@ -10,6 +10,6 @@ public class GamesNotPlayedException extends NoSuchElementException {
 	private static final long serialVersionUID = 1L;
 
 	public GamesNotPlayedException(){
-        super("Any game recorded in our data base");
+        super("Any game recorded in our data base for this user id");
     }
 }

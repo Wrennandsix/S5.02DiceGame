@@ -11,6 +11,7 @@ import cat.itacademy.barcelonactiva.SanchezMoreno.Marc.s05.t02.n01.domain.Usuari
 import cat.itacademy.barcelonactiva.SanchezMoreno.Marc.s05.t02.n01.dto.UsuarioDTO;
 import cat.itacademy.barcelonactiva.SanchezMoreno.Marc.s05.t02.n01.exceptions.ExistingNameException;
 import cat.itacademy.barcelonactiva.SanchezMoreno.Marc.s05.t02.n01.exceptions.GamesNotPlayedException;
+import cat.itacademy.barcelonactiva.SanchezMoreno.Marc.s05.t02.n01.exceptions.NotExistingUsersException;
 import cat.itacademy.barcelonactiva.SanchezMoreno.Marc.s05.t02.n01.exceptions.UserNotFoundException;
 import cat.itacademy.barcelonactiva.SanchezMoreno.Marc.s05.t02.n01.repository.GameRepository;
 import cat.itacademy.barcelonactiva.SanchezMoreno.Marc.s05.t02.n01.repository.UserRepository;
@@ -50,7 +51,9 @@ public class UserServiceImpl implements UserService {
 			}
 
 		}
-
+		if(games.isEmpty()) {
+			throw new GamesNotPlayedException();
+		}
 		return games;
 	}
 
@@ -103,7 +106,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public double calculatePlayerAverageRate(int id) {
+	public double calculateUserAverageRate(int id) {
 
 		List<Game> games = getUserGames(id);
 	
@@ -173,12 +176,15 @@ public class UserServiceImpl implements UserService {
 	    }
     @Override
     public Usuario getUser(Integer id) {
+    	
         Optional<Usuario> user = usersRepo.findById(id);
         if(user.isEmpty()){
             throw new UserNotFoundException();
         }
         return user.get();
     }
+    
+    
 
 	@Override
 	public Game playGame(Integer id) {
@@ -191,7 +197,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public void recalculateAverage(Integer id) {
-	 Double newAverage = calculatePlayerAverageRate(id);  
+	 Double newAverage = calculateUserAverageRate(id);  
 	
 	 Usuario user = getUser(id);
 	 user.setAverageRate(newAverage);	
@@ -217,7 +223,9 @@ public class UserServiceImpl implements UserService {
 	public List<UsuarioDTO> getUsersAverageRate() {
 		   
 	    List<Usuario> userList = usersRepo.findAll();
-	    
+	    if(userList.isEmpty()) {
+	    	throw new NotExistingUsersException();
+	    }
 	    List<UsuarioDTO> userDTOList = new ArrayList<>();
 	   
 	    
@@ -234,18 +242,18 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UsuarioDTO getLoser() {
 		
-	    List<UsuarioDTO> playerDTOList = getUsersAverageRate();
-	    return playerDTOList
+	    List<UsuarioDTO> userDTOList = getUsersAverageRate();
+	    return userDTOList
 	            .stream()
 	            .filter(u -> u.getAverageRate() != null)
 	            .min(Comparator.comparing(UsuarioDTO::getAverageRate))
 	            .orElseThrow(GamesNotPlayedException::new);
 	}
 	@Override
-	public UsuarioDTO getWiner() {
+	public UsuarioDTO getWinner() {
 		
-	    List<UsuarioDTO> playerDTOList = getUsersAverageRate();
-	    return playerDTOList
+	    List<UsuarioDTO> userDTOList = getUsersAverageRate();
+	    return userDTOList
 	            .stream()
 	            .filter(u -> u.getAverageRate() != null)
 	            .max(Comparator.comparing(UsuarioDTO::getAverageRate))

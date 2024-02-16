@@ -20,7 +20,7 @@ public interface UserService {
 	public double calculateAllAverageRate();
 	public List<Game> listGames();
 	public Game saveGame(Game game);
-	public double calculatePlayerAverageRate(int id);
+	public double calculateUserAverageRate(int id);
 	public Usuario userDTOToUser(UsuarioDTO userRegisterDTO);
 	public UsuarioDTO userToDTO(Usuario userRegister);
 	public Usuario getUser(Integer id);
@@ -28,6 +28,6 @@ public interface UserService {
 	public void deleteAllGames(Integer id);
 	public List<UsuarioDTO> getUsersAverageRate();
 	public UsuarioDTO getLoser();
-	public UsuarioDTO getWiner();
+	public UsuarioDTO getWinner();
 	public void recalculateAverage(Integer id);
 }	
