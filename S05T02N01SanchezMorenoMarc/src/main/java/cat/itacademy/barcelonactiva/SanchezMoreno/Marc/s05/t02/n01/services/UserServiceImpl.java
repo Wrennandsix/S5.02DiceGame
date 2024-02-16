@@ -180,14 +180,17 @@ public class UserServiceImpl implements UserService {
         return user.get();
     }
 
-    @Override
-    public Game playGame(Integer id) {
-                          
-        Game game = new Game(id);
-                 
-        return game;
-    }
-public void recalculateAverage(Integer id) {
+	@Override
+	public Game playGame(Integer id) {
+
+		Usuario userPlaying = getUser(id);
+
+		Game game = new Game(id);
+
+		return game;
+	}
+
+	public void recalculateAverage(Integer id) {
 	 Double newAverage = calculatePlayerAverageRate(id);  
 	
 	 Usuario user = getUser(id);
