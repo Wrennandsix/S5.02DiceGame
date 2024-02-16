@@ -13,11 +13,8 @@ public class UsuarioDTO {
 	}
 
 	public UsuarioDTO(String name, Double averageRate) {
-		if (name == null || name.isEmpty()) {
-			this.name = "ANONYMOUS";
-		} else {
-			this.name = name;
-		}
+
+	    this.name = name;
 		this.averageRate = averageRate;
 	}
 

@@ -43,6 +43,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<Game> getUserGames(int id) {
 		
+		Optional<Usuario> user = usersRepo.findById(id);
+		if (user.isEmpty()) {
+			throw new UserNotFoundException();
+		}
+
 		ArrayList<Game> games = new ArrayList<>();
 
 		for (int i = 0; i < gameRepo.findAll().size(); i++) {
@@ -51,7 +56,7 @@ public class UserServiceImpl implements UserService {
 			}
 
 		}
-		if(games.isEmpty()) {
+		if (games.isEmpty()) {
 			throw new GamesNotPlayedException();
 		}
 		return games;
@@ -59,29 +64,33 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Usuario findRepeatedUser(String name) {
-		List<Usuario> userList = usersRepo.findAll();
-		
-		if (userList.isEmpty()) {
-			Usuario firstUser = new Usuario("firstUser");			
-			return firstUser;
-		}
+	    List<Usuario> userList = usersRepo.findAll();
+	    
+	    Optional<Usuario> repeatedUser = userList.stream()
+	        .filter(u -> u.getName() != null && !u.getName().equalsIgnoreCase("Anonymus"))
+	        .filter(u -> u.getName() != null && u.getName().equalsIgnoreCase(name))
+	        .findFirst();
 
-		Optional<Usuario> repeatedUser = userList.stream().filter(u -> u.getName().equalsIgnoreCase(name))
-				.findFirst();
-
-		return repeatedUser.orElse(null);
+	    return repeatedUser.orElse(null);
 	}
+
 	
 	@Override
 	public void saveUser(UsuarioDTO registerDTO) {
-
-		Usuario registerUser = userDTOToUser(registerDTO);
+		
+		if (registerDTO.getName() == null || registerDTO.getName().trim().isEmpty()) {
+		    Usuario registerUserAnonymus = userDTOToUserAnonymus(registerDTO);
+		    usersRepo.save(registerUserAnonymus);
+		    return;
+		}
+		Usuario registerUser = userDTOToUser(registerDTO);		
 		Usuario repeatedUser = findRepeatedUser(registerUser.getName());
 		
 		if (repeatedUser == null) {
 			usersRepo.save(registerUser);
 			return;
 		}
+	
 		if (registerUser.getName().equalsIgnoreCase(repeatedUser.getName())) {
 			throw new ExistingNameException();
 		} else {
@@ -91,6 +100,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public double calculateAllAverageRate() {
+		
 		List<Game> games = gameRepo.findAll();
 
 		long victories = games.stream().filter(game -> game.getResult().equalsIgnoreCase("Victory!")).count();
@@ -152,6 +162,10 @@ public class UserServiceImpl implements UserService {
     public Usuario userDTOToUser(UsuarioDTO userRegisterDTO){
         return new Usuario(userRegisterDTO.getName());
     }
+    @Override
+    public Usuario userDTOToUserAnonymus(UsuarioDTO userRegisterDTOAnonymus){
+        return new Usuario("ANONYMOUS");
+    }
     
 	@Override
 	public UsuarioDTO userToDTO(Usuario userRegister) {
@@ -165,7 +179,7 @@ public class UserServiceImpl implements UserService {
 	        Usuario user = getUser(id);
 	       
 	        Usuario existingUser = usersRepo.findByName(userDTO.getName());
-	        System.out.println(userDTO.getName());
+	        
 	        if(existingUser != null){
 	            if(existingUser.getId() != user.getId()){
 	                throw new ExistingNameException();
@@ -189,7 +203,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Game playGame(Integer id) {
 
-		Usuario userPlaying = getUser(id);
+        Optional<Usuario> user = usersRepo.findById(id);
+        if(user.isEmpty()){
+            throw new UserNotFoundException();
+        }
 
 		Game game = new Game(id);
 

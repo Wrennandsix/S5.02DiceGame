@@ -30,4 +30,5 @@ public interface UserService {
 	public UsuarioDTO getLoser();
 	public UsuarioDTO getWinner();
 	public void recalculateAverage(Integer id);
+	Usuario userDTOToUserAnonymus(UsuarioDTO userRegisterDTOAnonymus);
 }	
