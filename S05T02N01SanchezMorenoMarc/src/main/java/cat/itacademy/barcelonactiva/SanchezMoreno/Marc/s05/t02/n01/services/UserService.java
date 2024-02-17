@@ -3,6 +3,7 @@ package cat.itacademy.barcelonactiva.SanchezMoreno.Marc.s05.t02.n01.services;
 import org.springframework.stereotype.Service;
 import cat.itacademy.barcelonactiva.SanchezMoreno.Marc.s05.t02.n01.domain.Game;
 import cat.itacademy.barcelonactiva.SanchezMoreno.Marc.s05.t02.n01.domain.Usuario;
+import cat.itacademy.barcelonactiva.SanchezMoreno.Marc.s05.t02.n01.dto.GameDTO;
 import cat.itacademy.barcelonactiva.SanchezMoreno.Marc.s05.t02.n01.dto.UsuarioDTO;
 import java.util.List;
 
@@ -31,4 +32,6 @@ public interface UserService {
 	public UsuarioDTO getWinner();
 	public void recalculateAverage(Integer id);
 	Usuario userDTOToUserAnonymus(UsuarioDTO userRegisterDTOAnonymus);
+	GameDTO gameToGameDTO(Game game);
+	List<GameDTO> gameListToGameListDTO(List<Game> games);
 }	

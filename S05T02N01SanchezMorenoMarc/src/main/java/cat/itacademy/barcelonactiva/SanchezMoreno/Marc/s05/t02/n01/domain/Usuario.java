@@ -2,17 +2,13 @@ package cat.itacademy.barcelonactiva.SanchezMoreno.Marc.s05.t02.n01.domain;
 
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.SourceType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -38,12 +34,13 @@ public class Usuario {
 	private Timestamp userDate;
 
 	public Usuario() {
+
 	}
-	
-    public Usuario(String name) {
-        this.name = name;
-        this.averageRate = 0.0;
-    }
+
+	public Usuario(String name) {
+		this.name = name;
+		this.averageRate = 0.0;
+	}
 
 	public int getId() {
 		return id;
