@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
 		List<Usuario> userList = usersRepo.findAll();
 
 		Optional<Usuario> repeatedUser = userList.stream()
-				.filter(u -> u.getName() != null && !u.getName().equalsIgnoreCase("Anonymus"))
+				.filter(u -> u.getName() != null && !u.getName().equalsIgnoreCase("ANONYMOUS"))
 				.filter(u -> u.getName() != null && u.getName().equalsIgnoreCase(name)).findFirst();
 
 		return repeatedUser.orElse(null);
@@ -254,7 +254,7 @@ public class UserServiceImpl implements UserService {
 			gameRepo.delete(game);
 		}
 		Usuario currentUser = getUser(id);
-		currentUser.setAverageRate(0.0);
+		currentUser.setAverageRate(null);
 		usersRepo.save(currentUser);
 	}
 

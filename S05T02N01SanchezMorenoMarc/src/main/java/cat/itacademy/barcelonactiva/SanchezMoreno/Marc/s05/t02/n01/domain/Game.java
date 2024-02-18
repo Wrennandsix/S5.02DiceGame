@@ -38,9 +38,6 @@ public class Game {
 	@Column(nullable = false, updatable = false, insertable = false)
 	private Timestamp gameDate;
 
-	public Game() {
-
-	}
 	public Game(int usuario_id) {
 		ResultCalculator calculateResult = (d1, d2) -> (d1 + d2 == 7) ? "Victory!" : "you lose";
 

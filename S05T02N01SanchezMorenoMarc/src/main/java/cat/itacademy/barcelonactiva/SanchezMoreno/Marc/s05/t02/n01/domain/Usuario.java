@@ -33,13 +33,10 @@ public class Usuario {
 	@Column(nullable = false, updatable = false, insertable = false)
 	private Timestamp userDate;
 
-	public Usuario() {
-
-	}
 
 	public Usuario(String name) {
 		this.name = name;
-		this.averageRate = 0.0;
+		this.averageRate = null;
 	}
 
 	public int getId() {
